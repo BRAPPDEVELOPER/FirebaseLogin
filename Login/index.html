@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="login">
+            <h2 id="login-l">Login</h2>
+        </div>
+
+        <form class="form">
+            <div class="form-control">
+                <label>Username:</label>
+                <input type="email" id="email" placeholder="Email">
+            </div>
+
+            <div class="form-control">
+                <label>Phone no:</label>
+                <input type="number" id="phoneNo" placeholder="Phone no">
+            </div>
+
+            <div class="form-control">
+                <label>Password:</label>
+                <input type="password" id="password" placeholder="Password">
+            </div>
+
+            <button  id="loginBtn">Login</button>
+
+        </form>
+    </div>
+
+    <!--for firebase connectivity-->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+        import { getDatabase, ref, set, child, update, remove }
+            from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC_Q2XdajuDy21e4kMjLVpwfdkP_ghr81c",
+            authDomain: "weblogin-c23d3.firebaseapp.com",
+            databaseURL: "https://weblogin-c23d3-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "weblogin-c23d3",
+            storageBucket: "weblogin-c23d3.appspot.com",
+            messagingSenderId: "608703668398",
+            appId: "1:608703668398:web:4e1cccd8f345908b848d3f"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase();
+
+        //add onclick event
+        document.getElementById("loginBtn").addEventListener("click", insertUserData);
+
+        function insertUserData() {
+            var email = document.getElementById("email").value;
+            var phoneNo = document.getElementById("phoneNo").value;
+            var password = document.getElementById("password").value;
+            console.log(email);
+
+            if (email == '') {
+                alert("Email is empty")
+            } else {
+                set(ref(database, "Users/" + phoneNo), {
+                    userName: email,
+                    password: password
+                })
+                    .then(() => {
+                        alert("succ");
+                    })
+                    .catch((error) => {
+                        alert("fail" + error);
+                    });
+            }
+
+        }
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
